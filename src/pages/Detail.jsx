@@ -1,10 +1,10 @@
 import React from "react";
 import DetailInfo from "../components/DetailInfo";
 
-const Detail = ({ expenses, setExpenses }) => {
+const Detail = () => {
   return (
     <div>
-      <DetailInfo expenses={expenses} setExpenses={setExpenses} />
+      <DetailInfo />
     </div>
   );
 };

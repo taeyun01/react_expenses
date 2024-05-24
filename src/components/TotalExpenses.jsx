@@ -1,26 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
+import { Context } from "../context/Context";
 
-const TotalExpenses = ({ expenses, totalMonth }) => {
+const TotalExpenses = () => {
+  const { expenses, totalMonth } = useContext(Context);
+
   // 원하는 문자열 지우기
   const strHook = (my_string, letter) => {
     let reg = new RegExp(letter, "g");
     return my_string.replace(reg, "");
   };
 
-  const monthSlice = strHook(totalMonth, "월");
+  let monthSlice = strHook(totalMonth, "월"); // 1월 -> "월"제거
 
-  let sliceMonth = "";
   // 10이하는 0붙이기, 01 ~ 09
   if (Number(monthSlice) < 10) {
-    sliceMonth = `0${monthSlice}`;
+    monthSlice = `0${monthSlice}`;
   } else {
-    sliceMonth = monthSlice;
+    monthSlice = monthSlice;
   }
 
   // N 월 지출 총 합계
   const totalExpenses = expenses
-    .filter((exp) => exp.date.substring(5, 7) === sliceMonth)
+    .filter((exp) => exp.date.substring(5, 7) === monthSlice)
     .map((exp) => Number(exp.amount))
     .reduce((acc, cur) => acc + cur, 0);
 

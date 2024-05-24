@@ -5,6 +5,7 @@ import Home from "../pages/Home";
 import Notfound from "../pages/Notfound";
 import { v4 as uuidv4 } from "uuid";
 import Test from "../pages/Test";
+import { Context } from "../context/Context";
 
 const monthData = [
   {
@@ -129,29 +130,35 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Home
-              month={month}
-              setMonth={setMonth}
-              expenses={expenses}
-              setExpenses={setExpenses}
-              totalMonth={totalMonth}
-              setTotalMonth={setTotalMonth}
-            />
-          }
-        />
-        <Route
-          path="/detail/:id"
-          element={
-            <Detail expenses={expenses} setExpenses={setExpenses} />
-          }
-        />
-        <Route path="/test" element={<Test />} />
-        <Route path="*" element={<Notfound />} />
-      </Routes>
+      <Context.Provider
+        value={{
+          month,
+          expenses,
+          totalMonth,
+          setMonth,
+          setExpenses,
+          setTotalMonth,
+        }}
+      >
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home
+                month={month}
+                setMonth={setMonth}
+                expenses={expenses}
+                setExpenses={setExpenses}
+                totalMonth={totalMonth}
+                setTotalMonth={setTotalMonth}
+              />
+            }
+          />
+          <Route path="/detail/:id" element={<Detail />} />
+          <Route path="/test" element={<Test />} />
+          <Route path="*" element={<Notfound />} />
+        </Routes>
+      </Context.Provider>
     </BrowserRouter>
   );
 };

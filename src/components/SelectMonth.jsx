@@ -1,19 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
+import { Context } from "../context/Context";
 
-const SelectMonth = ({ selectMonthExpenses, month, setMonth }) => {
+const SelectMonth = ({ selectMonthExpenses }) => {
+  const { month, setMonth, setTotalMonth } = useContext(Context);
+
   const [activeIndex, setActiveIndex] = useState("");
+
+  // 1월~12월 버튼 클릭시 실행
   const selectMonthActive = (id) => {
     setActiveIndex(id);
-    const monthNumber = month.filter((mon) => mon.id === id)[0].month;
-    selectMonthExpenses(monthNumber); // 1월~12월
-    setMonth(
-      month.map((mon) =>
-        mon.id === id
-          ? { ...mon, isBool: true }
-          : { ...mon, isBool: false }
-      )
-    );
+    const monthNumber = month.filter((mon) => mon.id === id)[0].month; // 내가 선택한 n월 문자열
+    setTotalMonth(monthNumber);
+    localStorage.setItem("selectMonth", JSON.stringify(monthNumber));
+    // setMonth(
+    //   month.map((mon) =>
+    //     mon.id === id
+    //       ? { ...mon, isBool: true }
+    //       : { ...mon, isBool: false }
+    //   )
+    // );
   };
 
   return (

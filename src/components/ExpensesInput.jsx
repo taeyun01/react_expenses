@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
+import { Context } from "../context/Context";
 
-const ExpensesInput = ({ setExpenses }) => {
+const ExpensesInput = () => {
+  const { setExpenses } = useContext(Context);
   const [input, setInput] = useState({
     date: "",
     item: "",

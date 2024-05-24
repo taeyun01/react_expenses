@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import ExpensesItem from "./ExpensesItem";
+import { Context } from "../context/Context";
 
-const ExpensesList = ({ expenses, totalMonth }) => {
+const ExpensesList = () => {
+  const { expenses, totalMonth } = useContext(Context);
+
   function strHook(my_string, letter) {
     let reg = new RegExp(letter, "g");
     return my_string.replace(reg, "");

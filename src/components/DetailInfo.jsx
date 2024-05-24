@@ -1,7 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { Context } from "../context/Context";
 
-const DetailInfo = ({ expenses, setExpenses }) => {
+const DetailInfo = () => {
+  const { expenses, setExpenses } = useContext(Context);
+
   const { id } = useParams();
   const nav = useNavigate();
   const dateRef = useRef("");
