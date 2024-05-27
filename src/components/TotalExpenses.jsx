@@ -4,13 +4,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { totalMonthReducer } from "../redux/slices/expensesSlice";
 
 const TotalExpenses = () => {
-  const { expenses } = useSelector((state) => state.expenses); // N월 데이터
-  const { totalMonth } = useSelector((state) => state.expenses); // N월 데이터
+  const { expenses, totalMonth } = useSelector(
+    (state) => state.expenses
+  ); // 지출데이터, N월
   const dispatch = useDispatch();
-  let monthSlice = totalMonth.replace("월", ""); // 1월 -> 1
+
+  let monthSlice = totalMonth;
 
   // 10미만는 0붙이기, 01 ~ 09
-  if (Number(monthSlice) < 10) {
+  if (Number(totalMonth) < 10) {
     monthSlice = `0${monthSlice}`;
   } else {
     monthSlice = monthSlice;
@@ -18,7 +20,7 @@ const TotalExpenses = () => {
 
   // N 월 지출 총 합계
   const totalExpenses = expenses
-    .filter((exp) => exp.date.substring(5, 7) === monthSlice)
+    .filter((exp) => exp.date.substring(5, 7) === String(monthSlice))
     .map((exp) => Number(exp.amount))
     .reduce((acc, cur) => acc + cur, 0);
 
@@ -33,8 +35,8 @@ const TotalExpenses = () => {
   return (
     <TotalExpensesDiv>
       <h2>
-        {totalMonth} 총 지출 :{totalExpenses.toLocaleString("ko-KR")}
-        원
+        {totalMonth}월 총 지출 :{" "}
+        {totalExpenses.toLocaleString("ko-KR")}원
       </h2>
     </TotalExpensesDiv>
   );

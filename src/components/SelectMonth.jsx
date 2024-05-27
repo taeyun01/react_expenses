@@ -1,40 +1,41 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { totalMonthReducer } from "../redux/slices/expensesSlice";
 
 const SelectMonth = () => {
-  const { month } = useSelector((state) => state.expenses); // N월 데이터
+  const { month } = useSelector((state) => state.expenses); // 월 데이터
   const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState("");
 
   // 1월~12월 버튼 클릭시 실행
   const selectMonthActive = (id) => {
     setActiveIndex(id);
-    const monthNumber = month.filter((mon) => mon.id === id)[0].month; // 내가 선택한 n월 문자열
-    dispatch(totalMonthReducer(monthNumber));
-    localStorage.setItem("selectMonth", JSON.stringify(monthNumber));
-    // setMonth(
-    //   month.map((mon) =>
-    //     mon.id === id
-    //       ? { ...mon, isBool: true }
-    //       : { ...mon, isBool: false }
-    //   )
-    // );
+    dispatch(totalMonthReducer(id));
+    localStorage.setItem("selectMonth", JSON.stringify(id));
   };
+
+  // 새로고침해도 버튼 활성화 유지
+  useEffect(() => {
+    // N월 가져오기
+    const selectMonth = JSON.parse(
+      localStorage.getItem("selectMonth")
+    );
+
+    setActiveIndex(selectMonth);
+  }, []);
 
   return (
     <div>
       <SelectMonthDiv>
         {month.map((mon) => (
-          <MonthItem
-            key={mon.id}
-            $active={activeIndex === mon.id}
-            // className={mon.isBool ? active : ""}
-            onClick={() => selectMonthActive(mon.id)}
+          <MonthItemDiv
+            key={mon.number}
+            $active={activeIndex === mon.number}
+            onClick={() => selectMonthActive(mon.number)}
           >
-            {mon.month}
-          </MonthItem>
+            {mon.number}월
+          </MonthItemDiv>
         ))}
       </SelectMonthDiv>
     </div>
@@ -53,7 +54,7 @@ const SelectMonthDiv = styled.div`
   align-items: flex-end;
 `;
 
-const MonthItem = styled.div`
+const MonthItemDiv = styled.div`
   text-align: center;
   padding: 20px;
   width: 100px;
@@ -68,10 +69,6 @@ const MonthItem = styled.div`
     background-color: #81adff;
     color: white;
     transition: 0.3s;
-  }
-  &.active {
-    background-color: #81adff;
-    color: white;
   }
 `;
 

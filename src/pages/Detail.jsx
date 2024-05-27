@@ -16,4 +16,5 @@ const DetailContainer = styled.div`
   flex-direction: column;
   justify-content: center;
 `;
+
 export default Detail;

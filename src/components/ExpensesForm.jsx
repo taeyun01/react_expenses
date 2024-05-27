@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
 import { createReducer } from "../redux/slices/expensesSlice";
 
-const ExpensesInput = () => {
+const ExpensesForm = () => {
   const dispatch = useDispatch();
 
   const [input, setInput] = useState({
@@ -56,7 +56,7 @@ const ExpensesInput = () => {
   };
 
   return (
-    <From onSubmit={createExpenses}>
+    <FormContainer onSubmit={createExpenses}>
       <InputBox>
         <label htmlFor="date">날짜</label>
         <Input
@@ -79,14 +79,14 @@ const ExpensesInput = () => {
         />
       </InputBox>
       <InputBox>
-        <label htmlFor="amount">지출 금액</label>
+        <label htmlFor="amount">금액</label>
         <Input
           type="number"
           id="amount"
           name="amount"
           value={input.amount}
           onChange={onChange}
-          placeholder="금액"
+          placeholder="지출 금액"
         />
       </InputBox>
       <InputBox>
@@ -97,15 +97,15 @@ const ExpensesInput = () => {
           name="description"
           value={input.description}
           onChange={onChange}
-          placeholder="내용"
+          placeholder="지출 내용"
         />
       </InputBox>
       <Button>저장</Button>
-    </From>
+    </FormContainer>
   );
 };
 
-const From = styled.form`
+const FormContainer = styled.form`
   width: 100%;
   padding: 14px 12px;
   border: 2px solid #acc2ff;
@@ -128,7 +128,7 @@ const Input = styled.input`
   margin-top: 5px;
   border-radius: 4px;
   border: 1px solid;
-  padding: 5px;
+  padding: 8px 6px;
 `;
 
 const Button = styled.button`
@@ -137,7 +137,8 @@ const Button = styled.button`
   background-color: #81adff;
   color: white;
   border-radius: 5px;
+  font-size: 16px;
   cursor: pointer;
 `;
 
-export default ExpensesInput;
+export default ExpensesForm;
