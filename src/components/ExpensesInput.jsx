@@ -1,10 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { Context } from "../context/Context";
+import { useDispatch } from "react-redux";
+import { createReducer } from "../redux/slices/expensesSlice";
 
 const ExpensesInput = () => {
-  const { setExpenses } = useContext(Context);
+  const dispatch = useDispatch();
+
   const [input, setInput] = useState({
     date: "",
     item: "",
@@ -19,8 +21,11 @@ const ExpensesInput = () => {
     });
   };
 
+  // 인풋 입력 후 저장버튼 클릭 시 실행
   const createExpenses = (e) => {
     e.preventDefault();
+
+    // 유효성 검사
     if (
       input.date === "" ||
       input.item === "" ||
@@ -30,14 +35,16 @@ const ExpensesInput = () => {
       return alert("내용을 모두 입력해주세요!");
     }
 
-    const newExpenses = {
-      id: uuidv4(),
-      date: input.date,
-      item: input.item,
-      amount: input.amount,
-      description: input.description,
-    };
-    setExpenses((prev) => [newExpenses, ...prev]);
+    // 지출내역 생성 action 전달
+    dispatch(
+      createReducer({
+        id: uuidv4(),
+        date: input.date,
+        item: input.item,
+        amount: input.amount,
+        description: input.description,
+      })
+    );
 
     setInput({
       ...input,
@@ -68,16 +75,18 @@ const ExpensesInput = () => {
           name="item"
           value={input.item}
           onChange={onChange}
+          placeholder="지출 항목"
         />
       </InputBox>
       <InputBox>
-        <label htmlFor="amount">금액</label>
+        <label htmlFor="amount">지출 금액</label>
         <Input
           type="number"
           id="amount"
           name="amount"
           value={input.amount}
           onChange={onChange}
+          placeholder="금액"
         />
       </InputBox>
       <InputBox>
@@ -88,6 +97,7 @@ const ExpensesInput = () => {
           name="description"
           value={input.description}
           onChange={onChange}
+          placeholder="내용"
         />
       </InputBox>
       <Button>저장</Button>
@@ -102,9 +112,10 @@ const From = styled.form`
   border-radius: 8px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
+
   flex-wrap: wrap;
   gap: 15px;
-  align-items: flex-end;
 `;
 
 const InputBox = styled.div`
@@ -113,7 +124,7 @@ const InputBox = styled.div`
 `;
 
 const Input = styled.input`
-  width: 120px;
+  width: 100%;
   margin-top: 5px;
   border-radius: 4px;
   border: 1px solid;

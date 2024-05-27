@@ -1,29 +1,24 @@
-import React, { useContext } from "react";
+import React from "react";
 import styled from "styled-components";
 import ExpensesItem from "./ExpensesItem";
-import { Context } from "../context/Context";
+import { useSelector } from "react-redux";
 
 const ExpensesList = () => {
-  const { expenses, totalMonth } = useContext(Context);
+  const { expenses } = useSelector((state) => state.expenses); // 지출 데이터
+  const { totalMonth } = useSelector((state) => state.expenses); // N월
 
-  function strHook(my_string, letter) {
-    let reg = new RegExp(letter, "g");
-    return my_string.replace(reg, "");
-  }
+  let monthSlice = totalMonth.replace("월", ""); // 1월 -> 1
 
-  let sliceMonth = "";
-
-  const monthSlice = strHook(totalMonth, "월");
-
-  // 10이하는 0붙이기, 01 ~ 09
+  // // 10미만은 0붙이기, 01 ~ 09
   if (Number(monthSlice) < 10) {
-    sliceMonth = `0${monthSlice}`;
+    monthSlice = `0${monthSlice}`;
   } else {
-    sliceMonth = monthSlice;
+    monthSlice = monthSlice;
   }
 
+  // 내가 선택한 N월 지출만 필터
   const monthFilter = expenses.filter(
-    (mon) => mon.date.substring(5, 7) === sliceMonth
+    (mon) => mon.date.substring(5, 7) === monthSlice
   );
 
   return (
@@ -38,6 +33,7 @@ const ExpensesList = () => {
     </ExpensesListUl>
   );
 };
+
 const ExpensesListUl = styled.ul`
   padding: 14px;
   border: 2px solid #acc2ff;

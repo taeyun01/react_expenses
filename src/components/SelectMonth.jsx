@@ -1,17 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { Context } from "../context/Context";
+import { useSelector, useDispatch } from "react-redux";
+import { totalMonthReducer } from "../redux/slices/expensesSlice";
 
-const SelectMonth = ({ selectMonthExpenses }) => {
-  const { month, setMonth, setTotalMonth } = useContext(Context);
-
+const SelectMonth = () => {
+  const { month } = useSelector((state) => state.expenses); // N월 데이터
+  const dispatch = useDispatch();
   const [activeIndex, setActiveIndex] = useState("");
 
   // 1월~12월 버튼 클릭시 실행
   const selectMonthActive = (id) => {
     setActiveIndex(id);
     const monthNumber = month.filter((mon) => mon.id === id)[0].month; // 내가 선택한 n월 문자열
-    setTotalMonth(monthNumber);
+    dispatch(totalMonthReducer(monthNumber));
     localStorage.setItem("selectMonth", JSON.stringify(monthNumber));
     // setMonth(
     //   month.map((mon) =>
