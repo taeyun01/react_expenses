@@ -1,17 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 
 const TotalExpenses = () => {
   const { expenses, totalMonth } = useContext(Context);
 
-  // 원하는 문자열 지우기
-  const strHook = (my_string, letter) => {
-    let reg = new RegExp(letter, "g");
-    return my_string.replace(reg, "");
-  };
-
-  let monthSlice = strHook(totalMonth, "월"); // 1월 -> "월"제거
+  let monthSlice = totalMonth.replace("월", ""); // 1월 -> 1 ("월"제거)
 
   // 10이하는 0붙이기, 01 ~ 09
   if (Number(monthSlice) < 10) {

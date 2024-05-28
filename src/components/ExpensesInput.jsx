@@ -37,6 +37,7 @@ const ExpensesInput = () => {
       amount: input.amount,
       description: input.description,
     };
+
     setExpenses((prev) => [newExpenses, ...prev]);
 
     setInput({

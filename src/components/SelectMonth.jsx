@@ -2,35 +2,32 @@ import React, { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Context } from "../context/Context";
 
-const SelectMonth = ({ selectMonthExpenses }) => {
-  const { month, setMonth, setTotalMonth } = useContext(Context);
-
+const SelectMonth = () => {
+  const { month, setTotalMonth } = useContext(Context);
   const [activeIndex, setActiveIndex] = useState("");
 
   // 1월~12월 버튼 클릭시 실행
-  const selectMonthActive = (id) => {
-    setActiveIndex(id);
-    const monthNumber = month.filter((mon) => mon.id === id)[0].month; // 내가 선택한 n월 문자열
-    setTotalMonth(monthNumber);
-    localStorage.setItem("selectMonth", JSON.stringify(monthNumber));
-    // setMonth(
-    //   month.map((mon) =>
-    //     mon.id === id
-    //       ? { ...mon, isBool: true }
-    //       : { ...mon, isBool: false }
-    //   )
-    // );
+  const selectMonthActive = (month) => {
+    setActiveIndex(month);
+    setTotalMonth(month);
+    localStorage.setItem("selectMonth", JSON.stringify(month));
   };
+
+  useEffect(() => {
+    const selectMonth = JSON.parse(
+      localStorage.getItem("selectMonth")
+    );
+    setActiveIndex(selectMonth);
+  }, []);
 
   return (
     <div>
       <SelectMonthDiv>
         {month.map((mon) => (
           <MonthItem
-            key={mon.id}
-            $active={activeIndex === mon.id}
-            // className={mon.isBool ? active : ""}
-            onClick={() => selectMonthActive(mon.id)}
+            key={mon.month}
+            $active={activeIndex === mon.month}
+            onClick={() => selectMonthActive(mon.month)}
           >
             {mon.month}
           </MonthItem>
@@ -67,10 +64,6 @@ const MonthItem = styled.div`
     background-color: #81adff;
     color: white;
     transition: 0.3s;
-  }
-  &.active {
-    background-color: #81adff;
-    color: white;
   }
 `;
 
