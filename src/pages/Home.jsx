@@ -48,6 +48,8 @@ const Home = () => {
       <Margin />
       <SelectMonth />
       <Margin />
+      <Margin />
+
       <ExpensesList />
     </>
   );

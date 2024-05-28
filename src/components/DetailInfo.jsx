@@ -41,7 +41,9 @@ const DetailInfo = () => {
           id,
         })
       );
-      nav("/");
+
+      // 삭제한 페이지로 이동 안되게 뒤로가기 차단
+      nav("/", { replace: true });
     }
   };
   const onClickGoBack = () => {
