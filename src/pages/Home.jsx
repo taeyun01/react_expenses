@@ -5,10 +5,6 @@ import Margin from "../components/Margin";
 import SelectMonth from "../components/SelectMonth";
 import TotalExpenses from "../components/TotalExpenses";
 
-localStorage.getItem("selectMonth")
-  ? JSON.parse(localStorage.getItem("selectMonth"))
-  : localStorage.setItem("selectMonth", JSON.stringify("1월"));
-
 const Home = ({
   month,
   setMonth,
@@ -17,26 +13,12 @@ const Home = ({
   totalMonth,
   setTotalMonth,
 }) => {
-  const selectMonthExpenses = (monthNumber) => {
-    const month = monthNumber; // 1월~12월
-    setTotalMonth(month);
-    localStorage.setItem("selectMonth", JSON.stringify(month));
-  };
-
-  useEffect(() => {
-    const testSelect = JSON.parse(
-      localStorage.getItem("selectMonth")
-    );
-    const testActive = JSON.parse(localStorage.getItem("active"));
-    setTotalMonth(testSelect);
-  }, []);
-
   return (
     <>
       <ExpensesInput setExpenses={setExpenses} />
       <Margin />
       <SelectMonth
-        selectMonthExpenses={selectMonthExpenses}
+        setTotalMonth={setTotalMonth}
         month={month}
         setMonth={setMonth}
       />

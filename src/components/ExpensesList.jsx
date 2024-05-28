@@ -3,24 +3,18 @@ import styled from "styled-components";
 import ExpensesItem from "./ExpensesItem";
 
 const ExpensesList = ({ expenses, totalMonth }) => {
-  function strHook(my_string, letter) {
-    let reg = new RegExp(letter, "g");
-    return my_string.replace(reg, "");
-  }
-
-  let sliceMonth = "";
-
-  const monthSlice = strHook(totalMonth, "월");
+  let monthSlice = totalMonth.replace("월", "");
 
   // 10이하는 0붙이기, 01 ~ 09
   if (Number(monthSlice) < 10) {
-    sliceMonth = `0${monthSlice}`;
+    monthSlice = `0${monthSlice}`;
   } else {
-    sliceMonth = monthSlice;
+    monthSlice = monthSlice;
   }
 
+  // 내가 선택한 n월 데이터만 필터
   const monthFilter = expenses.filter(
-    (mon) => mon.date.substring(5, 7) === sliceMonth
+    (mon) => mon.date.substring(5, 7) === monthSlice
   );
 
   return (
