@@ -1,9 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-localStorage.getItem("selectMonth")
-  ? JSON.parse(localStorage.getItem("selectMonth"))
-  : localStorage.setItem("selectMonth", JSON.stringify(1));
-
 const initialState = {
   expenses: [],
   month: [
@@ -45,6 +41,7 @@ const initialState = {
     },
   ],
   totalMonth: "",
+  sortType: "latest",
 };
 
 const expensesSlice = createSlice({
@@ -90,6 +87,13 @@ const expensesSlice = createSlice({
     displayReducer: (state, action) => {
       state.expenses = action.payload;
     },
+    sortedReducer: (state, action) => {
+      state.sortType = action.payload;
+      localStorage.setItem(
+        "sortType",
+        JSON.stringify(state.sortType)
+      );
+    },
   },
 });
 
@@ -99,5 +103,6 @@ export const {
   editReducer,
   totalMonthReducer,
   displayReducer,
+  sortedReducer,
 } = expensesSlice.actions;
 export default expensesSlice.reducer;

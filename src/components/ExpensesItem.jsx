@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 const ExpensesItem = ({ id, date, item, amount, description }) => {
   const nav = useNavigate();
@@ -10,17 +11,19 @@ const ExpensesItem = ({ id, date, item, amount, description }) => {
   };
 
   return (
-    <ExpensesItemtLi onClick={() => detailPageMove(id)}>
-      <ItemtDiv>
-        <p>{date}</p>
-        <ItemtP>
-          {item} - {description}
-        </ItemtP>
-      </ItemtDiv>
-      <AmountDiv>
-        <p>{Number(amount).toLocaleString("ko-KR")} 원</p>
-      </AmountDiv>
-    </ExpensesItemtLi>
+    <>
+      <ExpensesItemtLi onClick={() => detailPageMove(id)}>
+        <ItemtDiv>
+          <p>{date}</p>
+          <ItemtP>
+            {item} - {description}
+          </ItemtP>
+        </ItemtDiv>
+        <AmountDiv>
+          <p>{Number(amount).toLocaleString("ko-KR")} 원</p>
+        </AmountDiv>
+      </ExpensesItemtLi>
+    </>
   );
 };
 
@@ -30,10 +33,15 @@ const ExpensesItemtLi = styled.li`
   align-items: center;
   width: 100%;
   padding: 20px;
+  border: 1px solid transparent;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
     rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
   cursor: pointer;
+
+  &:hover {
+    border: 1px solid #007aff;
+  }
 `;
 
 const ItemtDiv = styled.div`

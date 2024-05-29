@@ -6,7 +6,7 @@ import { totalMonthReducer } from "../redux/slices/expensesSlice";
 const SelectMonth = () => {
   const { month } = useSelector((state) => state.expenses); // 월 데이터
   const dispatch = useDispatch();
-  const [activeIndex, setActiveIndex] = useState("");
+  const [activeIndex, setActiveIndex] = useState(null);
 
   // 1월~12월 버튼 클릭시 실행
   const selectMonthActive = (id) => {
@@ -15,12 +15,12 @@ const SelectMonth = () => {
     localStorage.setItem("selectMonth", JSON.stringify(id));
   };
 
-  // 새로고침해도 버튼 활성화 유지
+  // 새로고침시 버튼 활성화 유지
   useEffect(() => {
     // N월 가져오기
-    const selectMonth = JSON.parse(
-      localStorage.getItem("selectMonth")
-    );
+    const selectMonth = localStorage.getItem("selectMonth")
+      ? JSON.parse(localStorage.getItem("selectMonth"))
+      : localStorage.setItem("selectMonth", JSON.stringify(1));
 
     setActiveIndex(selectMonth);
   }, []);
