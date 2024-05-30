@@ -18,10 +18,9 @@ const SelectMonth = () => {
   // 새로고침시 버튼 활성화 유지
   useEffect(() => {
     // N월 가져오기
-    const selectMonth = localStorage.getItem("selectMonth")
-      ? JSON.parse(localStorage.getItem("selectMonth"))
-      : localStorage.setItem("selectMonth", JSON.stringify(1));
-
+    const selectMonth = JSON.parse(
+      localStorage.getItem("selectMonth")
+    );
     setActiveIndex(selectMonth);
   }, []);
 
