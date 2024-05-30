@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useDispatch } from "react-redux";
-import { createReducer } from "../redux/slices/expensesSlice";
+import { createExpense } from "../redux/slices/expensesSlice";
 
 const ExpensesForm = () => {
   const dispatch = useDispatch();
@@ -37,7 +37,7 @@ const ExpensesForm = () => {
 
     // 지출내역 생성 action 전달
     dispatch(
-      createReducer({
+      createExpense({
         id: uuidv4(),
         date: input.date,
         item: input.item,

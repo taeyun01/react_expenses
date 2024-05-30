@@ -3,8 +3,8 @@ import styled from "styled-components";
 import ExpensesItem from "./ExpensesItem";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  displayReducer,
-  totalMonthReducer,
+  displayExpense,
+  totalMonthExpense,
 } from "../redux/slices/expensesSlice";
 import Margin from "./Margin";
 
@@ -64,8 +64,8 @@ const ExpensesList = () => {
     // 지출 데이터 꺼내기
     const localExpData = JSON.parse(localStorage.getItem("expenses"));
 
-    dispatch(totalMonthReducer(localSelectMonth));
-    dispatch(displayReducer(localExpData));
+    dispatch(totalMonthExpense(localSelectMonth));
+    dispatch(displayExpense(localExpData));
   }, []);
 
   return (

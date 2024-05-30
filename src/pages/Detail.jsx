@@ -3,8 +3,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  deleteReducer,
-  editReducer,
+  deleteExpense,
+  editExpense,
 } from "../redux/slices/expensesSlice";
 
 const Detail = () => {
@@ -22,7 +22,7 @@ const Detail = () => {
   const onClickEdit = () => {
     if (window.confirm("수정 하시겠습니까?")) {
       dispatch(
-        editReducer({
+        editExpense({
           id,
           date: dateRef.current.value,
           item: itemRef.current.value,
@@ -38,7 +38,7 @@ const Detail = () => {
   const onClickDelete = () => {
     if (window.confirm("정말 삭제하시겠습니까?")) {
       dispatch(
-        deleteReducer({
+        deleteExpense({
           id,
         })
       );

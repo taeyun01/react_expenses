@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { totalMonthReducer } from "../redux/slices/expensesSlice";
+import { totalMonthExpense } from "../redux/slices/expensesSlice";
 
 const SelectMonth = () => {
   const { month } = useSelector((state) => state.expenses); // 월 데이터
@@ -11,7 +11,7 @@ const SelectMonth = () => {
   // 1월~12월 버튼 클릭시 실행
   const selectMonthActive = (id) => {
     setActiveIndex(id);
-    dispatch(totalMonthReducer(id));
+    dispatch(totalMonthExpense(id));
     localStorage.setItem("selectMonth", JSON.stringify(id));
   };
 
