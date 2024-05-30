@@ -52,6 +52,7 @@ const DetailInfo = () => {
     amountRef.current.value = detailFilter.amount;
     descriptionRef.current.value = detailFilter.description;
   }, []);
+
   return (
     <DtailDiv>
       <InputBox>

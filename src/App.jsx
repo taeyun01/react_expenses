@@ -6,14 +6,14 @@ function App() {
   return (
     <>
       <GlobalStyle />
-      <AppDiv>
+      <AppContainer>
         <Router />
-      </AppDiv>
+      </AppContainer>
     </>
   );
 }
 
-const AppDiv = styled.div`
+const AppContainer = styled.div`
   max-width: 700px;
   height: 100vh;
   margin: 0 auto;
